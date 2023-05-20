@@ -5,4 +5,8 @@ class StringUtils {
     }
     return input[0].toUpperCase() + input.substring(1);
   }
+
+  String transformToUpper({required String value}) {
+    return value.toUpperCase();
+  }
 }

@@ -40,6 +40,7 @@ dependencies:
   build_runner: ^2.3.3
   http: ^0.13.6
   cached_network_image: ^3.2.3
+  font_awesome_flutter: ^10.4.0
 
 dev_dependencies:
   flutter_test:

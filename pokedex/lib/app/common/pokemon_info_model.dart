@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/app/common/pokemon_stats_model.dart';
 
 class PokemonInfoModel {
   int? id;
@@ -6,9 +7,10 @@ class PokemonInfoModel {
   String? image;
   int? weight;
   int? height;
-  String? ability;
+  List<String>? ability;
   Map<String, dynamic>? evolveFrom;
   List<String>? types;
+  List<PokemonStatsModel>? pokemonStats;
 
   PokemonInfoModel({
     this.id,
@@ -19,6 +21,7 @@ class PokemonInfoModel {
     this.ability,
     this.evolveFrom,
     this.types,
+    this.pokemonStats,
   });
 
   factory PokemonInfoModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +32,8 @@ class PokemonInfoModel {
     if (json['types_evolve'] != null) {
       typesEvolve = (json['types_evolve'] as List).map((typeJson) => typeJson['type']['name'] as String).toList();
     }
+
+    final ability = (json['abilities'] as List).map((abilityJson) => abilityJson['ability']['name'] as String).toList();
 
     return PokemonInfoModel(
       id: json['id'],
@@ -42,8 +47,13 @@ class PokemonInfoModel {
         'id': json['id_evolve'],
         'types': typesEvolve,
       },
-      ability: json['abilities'].isNotEmpty ? json['abilities'][0]['ability']['name'] : null,
+      ability: ability,
       types: types,
+      pokemonStats: List<PokemonStatsModel>.from((json['stats'] as List<dynamic>)
+          .map<PokemonStatsModel>(
+            (x) => PokemonStatsModel.fromJson(x),
+          )
+          .toList()),
     );
   }
 
