@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/app/modules/home/presentation/controllers/home_controller.dart';
 import 'package:pokedex/app/modules/home/presentation/widgets/appbar/home_appbar_custom.dart';
-import 'package:pokedex/app/modules/home/presentation/widgets/home_widget.dart';
+import 'package:pokedex/app/modules/home/presentation/widgets/home_pokemon_widget.dart';
 
 class HomeCard extends StatefulWidget {
   final HomeController controller;

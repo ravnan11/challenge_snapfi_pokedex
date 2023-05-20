@@ -57,7 +57,7 @@ class PokemonModel {
 
   String pokemonImage() {
     if (!blackList.contains(id)) {
-      return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png';
+      return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png';
     } else {
       return 'notfound';
     }

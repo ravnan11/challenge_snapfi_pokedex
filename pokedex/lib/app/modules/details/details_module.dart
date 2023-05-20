@@ -13,7 +13,9 @@ class DetailsModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute(
       Modular.initialRoute,
-      child: (_, args) => const DetailsPage(),
+      child: (_, args) => DetailsPage(
+        pokemon: args.data,
+      ),
     ),
   ];
 }
