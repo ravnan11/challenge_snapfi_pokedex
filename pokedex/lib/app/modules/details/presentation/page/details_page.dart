@@ -111,7 +111,7 @@ class DetailsPage extends StatelessWidget {
                                     style: TextStyle(
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 14,
+                                      fontSize: 16,
                                       color: pokemon.getTypeColor(pokemon.types![0]),
                                     ),
                                   ),
@@ -126,13 +126,13 @@ class DetailsPage extends StatelessWidget {
                                             children: [
                                               const Icon(
                                                 FontAwesomeIcons.weightHanging,
-                                                size: 10,
+                                                size: 14,
                                               ),
                                               const SizedBox(width: 10),
                                               Text(
                                                 pokemon.weight.toString(),
                                                 style: const TextStyle(
-                                                  fontSize: 10,
+                                                  fontSize: 14,
                                                 ),
                                               ),
                                             ],
@@ -141,7 +141,7 @@ class DetailsPage extends StatelessWidget {
                                           const Text(
                                             'Weight',
                                             style: TextStyle(
-                                              fontSize: 8,
+                                              fontSize: 12,
                                               fontWeight: FontWeight.w400,
                                               fontFamily: 'Poppins',
                                               color: Color(0xFF666666),
@@ -164,13 +164,13 @@ class DetailsPage extends StatelessWidget {
                                             children: [
                                               const Icon(
                                                 FontAwesomeIcons.rulerVertical,
-                                                size: 10,
+                                                size: 14,
                                               ),
                                               const SizedBox(width: 10),
                                               Text(
                                                 pokemon.height.toString(),
                                                 style: const TextStyle(
-                                                  fontSize: 10,
+                                                  fontSize: 14,
                                                 ),
                                               ),
                                             ],
@@ -179,7 +179,7 @@ class DetailsPage extends StatelessWidget {
                                           const Text(
                                             'Right',
                                             style: TextStyle(
-                                              fontSize: 8,
+                                              fontSize: 12,
                                               fontWeight: FontWeight.w400,
                                               fontFamily: 'Poppins',
                                               color: Color(0xFF666666),
@@ -202,7 +202,7 @@ class DetailsPage extends StatelessWidget {
                                             Text(
                                               pokemon.ability != null ? StringUtils().capitalize(pokemon.ability![i]) : '???',
                                               style: const TextStyle(
-                                                fontSize: 10,
+                                                fontSize: 14,
                                               ),
                                             ),
                                           ],
@@ -212,7 +212,7 @@ class DetailsPage extends StatelessWidget {
                                           const Text(
                                             'Moves',
                                             style: TextStyle(
-                                              fontSize: 8,
+                                              fontSize: 12,
                                               fontFamily: 'Poppins',
                                               fontWeight: FontWeight.w400,
                                               color: Color(0xFF666666),
@@ -250,6 +250,32 @@ class DetailsPage extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+            if (pokemon.id != 1) ...[
+              Positioned(
+                left: 20,
+                top: 230,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    size: 24,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+            Positioned(
+              right: 20,
+              top: 230,
+              child: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 24,
+                  color: Colors.white,
+                ),
               ),
             ),
             Positioned(
