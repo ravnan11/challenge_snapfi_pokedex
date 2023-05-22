@@ -10,45 +10,76 @@ class StatusBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(StringUtils().transformToUpper(value: pokemon.pokemonStats![index].name)),
-        Container(
-          width: 1.0,
-          height: 48.0,
-          color: Colors.grey,
-          margin: const EdgeInsets.symmetric(horizontal: 16.0),
-        ),
-        Text(pokemon.pokemonStats![index].value.toString()),
-        const SizedBox(
-          width: 8,
-        ),
-        Expanded(
-          child: LayoutBuilder(builder: (context, constraints) {
-            final maxWidth = constraints.maxWidth;
-            final percentColor = (maxWidth / 230) * pokemon.pokemonStats![index].value;
-            return Container(
-              height: 8,
-              width: maxWidth,
-              color: Colors.white,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  width: percentColor,
-                  decoration: BoxDecoration(
-                    color: pokemon.getTypeColor(pokemon.types![0]),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 110,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                StringUtils().transformToUpper(value: pokemon.pokemonStats![index].name),
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                  color: pokemon.getTypeColor(pokemon.types![0]),
                 ),
               ),
-            );
-          }),
-        ),
-        const SizedBox(
-          width: 30,
-        )
-      ],
+            ),
+          ),
+          Container(
+            width: 1.0,
+            height: 24.0,
+            color: Colors.grey,
+            margin: const EdgeInsets.symmetric(horizontal: 16.0),
+          ),
+          Text(
+            pokemon.pokemonStats![index].value.toString().padLeft(3, '0'),
+            style: const TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w400,
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final maxWidth = constraints.maxWidth;
+                final percentValue = pokemon.pokemonStats![index].value / 230;
+                final barWidth = maxWidth * percentValue;
+
+                return Container(
+                  height: 8,
+                  width: maxWidth,
+                  color: Colors.white,
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: barWidth,
+                        decoration: BoxDecoration(
+                          color: pokemon.getTypeColor(pokemon.types![0]),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                      Container(
+                        width: maxWidth,
+                        color: pokemon.getTypeColor(pokemon.types![0]).withOpacity(0.2),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
