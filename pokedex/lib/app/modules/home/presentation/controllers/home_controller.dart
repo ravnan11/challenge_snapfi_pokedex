@@ -12,6 +12,7 @@ class HomeController = HomeControllerBase with _$HomeController;
 abstract class HomeControllerBase with Store {
   final PokemonRepository repository;
   HomeControllerBase(this.repository);
+  final TextEditingController textSearchController = TextEditingController();
 
   @observable
   List<PokemonModel> listPokemonModel = [];
@@ -23,10 +24,24 @@ abstract class HomeControllerBase with Store {
   String nextUrl = '';
 
   @observable
-  bool searchAppear = false;
+  String searchText = '';
+
+  @observable
+  String orderBy = 'number';
 
   @action
-  changeSearchAppear() => searchAppear = !searchAppear;
+  void reOrderList() {
+    if (orderBy == 'name') {
+      listPokemonModel.sort((a, b) => a.name!.compareTo(b.name!));
+    } else {
+      listPokemonModel.sort((a, b) => a.id!.compareTo(b.id!));
+    }
+  }
+
+  @action
+  void setOrderBy(String value) {
+    orderBy = value;
+  }
 
   @action
   Future<List<PokemonModel>> getPokemons({required BuildContext context}) async {
@@ -135,5 +150,10 @@ abstract class HomeControllerBase with Store {
     pokemonInfoModel = PokemonInfoModel.fromJson(mergedPokemonInfo);
 
     return pokemonInfoModel!;
+  }
+
+  void clearSearch() {
+    searchText = '';
+    textSearchController.text = '';
   }
 }

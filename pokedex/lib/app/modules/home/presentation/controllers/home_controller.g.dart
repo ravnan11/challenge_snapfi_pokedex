@@ -57,19 +57,35 @@ mixin _$HomeController on HomeControllerBase, Store {
     });
   }
 
-  late final _$searchAppearAtom =
-      Atom(name: 'HomeControllerBase.searchAppear', context: context);
+  late final _$searchTextAtom =
+      Atom(name: 'HomeControllerBase.searchText', context: context);
 
   @override
-  bool get searchAppear {
-    _$searchAppearAtom.reportRead();
-    return super.searchAppear;
+  String get searchText {
+    _$searchTextAtom.reportRead();
+    return super.searchText;
   }
 
   @override
-  set searchAppear(bool value) {
-    _$searchAppearAtom.reportWrite(value, super.searchAppear, () {
-      super.searchAppear = value;
+  set searchText(String value) {
+    _$searchTextAtom.reportWrite(value, super.searchText, () {
+      super.searchText = value;
+    });
+  }
+
+  late final _$orderByAtom =
+      Atom(name: 'HomeControllerBase.orderBy', context: context);
+
+  @override
+  String get orderBy {
+    _$orderByAtom.reportRead();
+    return super.orderBy;
+  }
+
+  @override
+  set orderBy(String value) {
+    _$orderByAtom.reportWrite(value, super.orderBy, () {
+      super.orderBy = value;
     });
   }
 
@@ -115,11 +131,22 @@ mixin _$HomeController on HomeControllerBase, Store {
       ActionController(name: 'HomeControllerBase', context: context);
 
   @override
-  dynamic changeSearchAppear() {
+  void reOrderList() {
     final _$actionInfo = _$HomeControllerBaseActionController.startAction(
-        name: 'HomeControllerBase.changeSearchAppear');
+        name: 'HomeControllerBase.reOrderList');
     try {
-      return super.changeSearchAppear();
+      return super.reOrderList();
+    } finally {
+      _$HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setOrderBy(String value) {
+    final _$actionInfo = _$HomeControllerBaseActionController.startAction(
+        name: 'HomeControllerBase.setOrderBy');
+    try {
+      return super.setOrderBy(value);
     } finally {
       _$HomeControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -131,7 +158,8 @@ mixin _$HomeController on HomeControllerBase, Store {
 listPokemonModel: ${listPokemonModel},
 pokemonInfoModel: ${pokemonInfoModel},
 nextUrl: ${nextUrl},
-searchAppear: ${searchAppear}
+searchText: ${searchText},
+orderBy: ${orderBy}
     ''';
   }
 }

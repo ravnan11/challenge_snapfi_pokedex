@@ -1,16 +1,26 @@
-# pokedex
 
-A new Flutter project.
 
-## Getting Started
+"Bem-vindo à documentação do nosso aplicativo Flutter. Este aplicativo permite que você faça XYZ. Para executar o aplicativo, você precisará ter o Flutter SDK instalado em seu computador. Certifique-se de ter as seguintes dependências instaladas:"
 
-This project is a starting point for a Flutter application.
+Flutter SDK: https://docs.flutter.dev/get-started/install
+Git: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
-A few resources to get you started if this is your first Flutter project:
+Clone o repositório do GitHub:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+    git clone git@github.com:ravnan11/challenge_snapfi_pokedex.git
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Navegue para o diretório do projeto:
+
+cd challenge_snapfi_pokedex
+cd pokedex
+
+Instale as dependências do projeto:
+
+flutter pub get
+
+Execute o aplicativo:
+
+flutter run
+
+
+

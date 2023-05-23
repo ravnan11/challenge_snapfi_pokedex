@@ -1,13 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pokedex/app/common/pokemon_info_model.dart';
 import 'package:pokedex/app/core/image/app_images.dart';
 import 'package:pokedex/app/core/utils/utils.dart';
 import 'package:pokedex/app/modules/home/presentation/controllers/home_controller.dart';
 
 import 'widgets/details_statusbar.dart';
+import 'widgets/next_pokemon_widget.dart';
+import 'widgets/pokemon_characteristics_widget.dart';
+import 'widgets/previous_pokemon_widget.dart';
 
 class DetailsPage extends StatelessWidget {
   final PokemonInfoModel pokemon;
@@ -34,7 +36,7 @@ class DetailsPage extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Modular.to.navigate('/');
+                            Modular.to.navigate('/home/');
                           },
                           child: const Icon(
                             Icons.arrow_back,
@@ -122,108 +124,7 @@ class DetailsPage extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(height: 16),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Icon(
-                                                FontAwesomeIcons.weightHanging,
-                                                size: 14,
-                                              ),
-                                              const SizedBox(width: 10),
-                                              Text(
-                                                '${pokemon.weight.toString()} kg',
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 12.0),
-                                          const Text(
-                                            'Weight',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily: 'Poppins',
-                                              color: Color(0xFF666666),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        width: 1.0,
-                                        height: 48.0,
-                                        color: Colors.grey,
-                                        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                                      ),
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Icon(
-                                                FontAwesomeIcons.rulerVertical,
-                                                size: 14,
-                                              ),
-                                              const SizedBox(width: 10),
-                                              Text(
-                                                '${pokemon.height.toString()} m',
-                                                style: const TextStyle(
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 12.0),
-                                          const Text(
-                                            'Right',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              fontFamily: 'Poppins',
-                                              color: Color(0xFF666666),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        width: 1.0,
-                                        height: 48.0,
-                                        color: Colors.grey,
-                                        margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                                      ),
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          for (int i = 0; i < pokemon.ability!.length; i++) ...[
-                                            Text(
-                                              pokemon.ability != null ? StringUtils().capitalize(pokemon.ability![i]) : '???',
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ],
-
-                                          //pegar 2 opcoes de ability
-                                          const SizedBox(height: 4),
-                                          const Text(
-                                            'Moves',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xFF666666),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                  PokemoCharacteristicsWidget(pokemon: pokemon),
                                   const SizedBox(height: 32),
                                   Text(
                                     pokemon.description!,
@@ -257,57 +158,15 @@ class DetailsPage extends StatelessWidget {
               ),
             ),
             if (pokemon.id != 1) ...[
-              Positioned(
-                left: 20,
-                top: 230,
-                child: IconButton(
-                  onPressed: () async {
-                    final int pokemonIdx = controllerHome.listPokemonModel.indexWhere((element) => element.id == pokemon.id);
-                    final int pokemonId = controllerHome.listPokemonModel[pokemonIdx - 1].id!;
-
-                    final pokemonData = await controllerHome.getPokemonByName(context: context, name: pokemonId.toString());
-
-                    Modular.to.pushNamed(
-                      '/detail/',
-                      arguments: {
-                        'pokemon': pokemonData,
-                        'controller': controllerHome,
-                      },
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                    size: 24,
-                    color: Colors.white,
-                  ),
-                ),
+              PreviousPokemonWidget(
+                controllerHome: controllerHome,
+                pokemon: pokemon,
               ),
             ],
             if (pokemon.id! < 10020) ...[
-              Positioned(
-                right: 20,
-                top: 230,
-                child: IconButton(
-                  onPressed: () async {
-                    final int pokemonIdx = controllerHome.listPokemonModel.indexWhere((element) => element.id == pokemon.id);
-                    final int pokemonId = controllerHome.listPokemonModel[pokemonIdx + 1].id!;
-
-                    final pokemonData = await controllerHome.getPokemonByName(context: context, name: pokemonId.toString());
-
-                    Modular.to.pushNamed(
-                      '/detail/',
-                      arguments: {
-                        'pokemon': pokemonData,
-                        'controller': controllerHome,
-                      },
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.arrow_forward_ios,
-                    size: 24,
-                    color: Colors.white,
-                  ),
-                ),
+              NextPokemonWidget(
+                controllerHome: controllerHome,
+                pokemon: pokemon,
               ),
             ],
             Positioned(
