@@ -97,9 +97,7 @@ abstract class HomeControllerBase with Store {
   Future<PokemonInfoModel> getPokemonByName({required BuildContext context, required String name}) async {
     final pokemonResponse = await repository.getPokemonByNameID(param: name);
 
-    final pokemonID = int.parse(pokemonResponse['species']['url'].split('/')[6]);
-
-    final specieResponse = await repository.getPokemonSpecies(param: pokemonID.toString());
+    final specieResponse = await repository.getPokemonSpecies(param: pokemonResponse['species']['url'].split('/')[6]);
 
     if (pokemonResponse == 'Falha ao buscar dados.' || specieResponse == 'Falha ao buscar dados.') {
       ShowModal.error(context: context, textMsg: "Falha ao buscar dados.");
@@ -127,6 +125,7 @@ abstract class HomeControllerBase with Store {
       };
     }
 
+    jsonPokemonSpecies.remove('id');
     final mergedPokemonInfo = {
       ...jsonPokemonInfo,
       ...jsonPokemonSpecies,

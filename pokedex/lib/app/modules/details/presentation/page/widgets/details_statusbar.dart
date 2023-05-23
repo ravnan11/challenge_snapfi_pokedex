@@ -8,6 +8,23 @@ class StatusBar extends StatelessWidget {
 
   const StatusBar({super.key, required this.pokemon, required this.index});
 
+  String convertFieldName(String fieldName) {
+    switch (fieldName) {
+      case "attack":
+        return "ATK";
+      case "defense":
+        return "DEF";
+      case "special-attack":
+        return "SATK";
+      case "special-defense":
+        return "SDEF";
+      case "speed":
+        return "SPD";
+      default:
+        return fieldName;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,11 +34,13 @@ class StatusBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: 110,
+            width: 40,
             child: Align(
               alignment: Alignment.centerRight,
               child: Text(
-                StringUtils().transformToUpper(value: pokemon.pokemonStats![index].name),
+                StringUtils().transformToUpper(
+                  value: convertFieldName(pokemon.pokemonStats![index].name),
+                ),
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w700,

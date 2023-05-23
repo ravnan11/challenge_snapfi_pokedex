@@ -11,6 +11,7 @@ class PokemonInfoModel {
   Map<String, dynamic>? evolveFrom;
   List<String>? types;
   List<PokemonStatsModel>? pokemonStats;
+  String? description;
 
   PokemonInfoModel({
     this.id,
@@ -22,6 +23,7 @@ class PokemonInfoModel {
     this.evolveFrom,
     this.types,
     this.pokemonStats,
+    this.description,
   });
 
   factory PokemonInfoModel.fromJson(Map<String, dynamic> json) {
@@ -54,6 +56,7 @@ class PokemonInfoModel {
             (x) => PokemonStatsModel.fromJson(x),
           )
           .toList()),
+      description: json['flavor_text_entries'].length > 8 ? json['flavor_text_entries'][9]['flavor_text'] : '',
     );
   }
 

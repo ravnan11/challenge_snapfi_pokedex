@@ -5,12 +5,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pokedex/app/common/pokemon_info_model.dart';
 import 'package:pokedex/app/core/image/app_images.dart';
 import 'package:pokedex/app/core/utils/utils.dart';
+import 'package:pokedex/app/modules/home/presentation/controllers/home_controller.dart';
 
 import 'widgets/details_statusbar.dart';
 
 class DetailsPage extends StatelessWidget {
   final PokemonInfoModel pokemon;
-  const DetailsPage({Key? key, required this.pokemon}) : super(key: key);
+  final HomeController controllerHome;
+  const DetailsPage({
+    Key? key,
+    required this.pokemon,
+    required this.controllerHome,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +136,7 @@ class DetailsPage extends StatelessWidget {
                                               ),
                                               const SizedBox(width: 10),
                                               Text(
-                                                pokemon.weight.toString(),
+                                                '${pokemon.weight.toString()} kg',
                                                 style: const TextStyle(
                                                   fontSize: 14,
                                                 ),
@@ -149,14 +155,12 @@ class DetailsPage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(width: 24),
                                       Container(
                                         width: 1.0,
                                         height: 48.0,
                                         color: Colors.grey,
                                         margin: const EdgeInsets.symmetric(horizontal: 16.0),
                                       ),
-                                      const SizedBox(width: 24),
                                       Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
@@ -168,7 +172,7 @@ class DetailsPage extends StatelessWidget {
                                               ),
                                               const SizedBox(width: 10),
                                               Text(
-                                                pokemon.height.toString(),
+                                                '${pokemon.height.toString()} m',
                                                 style: const TextStyle(
                                                   fontSize: 14,
                                                 ),
@@ -187,14 +191,12 @@ class DetailsPage extends StatelessWidget {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(width: 24),
                                       Container(
                                         width: 1.0,
                                         height: 48.0,
                                         color: Colors.grey,
                                         margin: const EdgeInsets.symmetric(horizontal: 16.0),
                                       ),
-                                      const SizedBox(width: 24),
                                       Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
@@ -223,7 +225,9 @@ class DetailsPage extends StatelessWidget {
                                     ],
                                   ),
                                   const SizedBox(height: 32),
-                                  const Text('TEXTO DE DESCRIÇAO'),
+                                  Text(
+                                    pokemon.description!,
+                                  ),
                                   const SizedBox(height: 32),
                                   Text(
                                     'Base Stats',
@@ -257,7 +261,20 @@ class DetailsPage extends StatelessWidget {
                 left: 20,
                 top: 230,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    final int pokemonIdx = controllerHome.listPokemonModel.indexWhere((element) => element.id == pokemon.id);
+                    final int pokemonId = controllerHome.listPokemonModel[pokemonIdx - 1].id!;
+
+                    final pokemonData = await controllerHome.getPokemonByName(context: context, name: pokemonId.toString());
+
+                    Modular.to.pushNamed(
+                      '/detail/',
+                      arguments: {
+                        'pokemon': pokemonData,
+                        'controller': controllerHome,
+                      },
+                    );
+                  },
                   icon: const Icon(
                     Icons.arrow_back_ios,
                     size: 24,
@@ -266,18 +283,33 @@ class DetailsPage extends StatelessWidget {
                 ),
               ),
             ],
-            Positioned(
-              right: 20,
-              top: 230,
-              child: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.arrow_forward_ios,
-                  size: 24,
-                  color: Colors.white,
+            if (pokemon.id! < 10020) ...[
+              Positioned(
+                right: 20,
+                top: 230,
+                child: IconButton(
+                  onPressed: () async {
+                    final int pokemonIdx = controllerHome.listPokemonModel.indexWhere((element) => element.id == pokemon.id);
+                    final int pokemonId = controllerHome.listPokemonModel[pokemonIdx + 1].id!;
+
+                    final pokemonData = await controllerHome.getPokemonByName(context: context, name: pokemonId.toString());
+
+                    Modular.to.pushNamed(
+                      '/detail/',
+                      arguments: {
+                        'pokemon': pokemonData,
+                        'controller': controllerHome,
+                      },
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 24,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ),
+            ],
             Positioned(
               right: 0,
               child: Image.asset(

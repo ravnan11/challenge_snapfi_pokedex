@@ -23,7 +23,13 @@ class _HomePokemonWidgetState extends State<HomePokemonWidget> {
       onTap: () async {
         final pokemonData = await controller.getPokemonByName(context: context, name: widget.pokemon.name!);
 
-        Modular.to.navigate('/detail', arguments: pokemonData);
+        Modular.to.navigate(
+          '/detail',
+          arguments: {
+            'pokemon': pokemonData,
+            'controller': controller,
+          },
+        );
       },
       child: Container(
         height: 108,

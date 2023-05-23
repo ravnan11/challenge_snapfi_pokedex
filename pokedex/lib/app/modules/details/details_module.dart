@@ -14,7 +14,8 @@ class DetailsModule extends Module {
     ChildRoute(
       Modular.initialRoute,
       child: (_, args) => DetailsPage(
-        pokemon: args.data,
+        pokemon: args.data['pokemon'],
+        controllerHome: args.data['controller'],
       ),
     ),
   ];

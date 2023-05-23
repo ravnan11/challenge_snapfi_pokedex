@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedex/app/core/image/app_images.dart';
+import 'package:pokedex/app/modules/home/presentation/controllers/home_controller.dart';
 
 class AppbarCustom extends StatelessWidget {
   const AppbarCustom({super.key});
@@ -7,6 +9,9 @@ class AppbarCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final HomeController controller = Modular.get();
+
+    print(controller.listPokemonModel.length);
 
     return AppBar(
       toolbarHeight: size.height * .1,
@@ -53,23 +58,35 @@ class AppbarCustom extends StatelessWidget {
                       alignLabelWithHint: true,
                     ),
                     textAlignVertical: TextAlignVertical.center,
+                    onSubmitted: (value) async {
+                      await controller.filterPokemon(
+                        context: context,
+                        param: value.toLowerCase(),
+                      );
+                      print(value);
+
+                      print(controller.listPokemonModel.length);
+                    },
                   ),
                 ),
               ),
               const SizedBox(width: 16.0),
-              Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
-                  color: Colors.white,
-                ),
-                child: const Center(
-                  child: Text(
-                    '#',
-                    style: TextStyle(color: Color(0xFFDC0A2D)),
+              GestureDetector(
+                child: Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    color: Colors.white,
+                  ),
+                  child: const Center(
+                    child: Text(
+                      '#',
+                      style: TextStyle(color: Color(0xFFDC0A2D)),
+                    ),
                   ),
                 ),
+                onTap: () {},
               ),
             ],
           ),
