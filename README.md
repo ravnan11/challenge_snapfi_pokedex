@@ -1,4 +1,4 @@
-# Challenge Snapfi Pokedex
+#Pokedex
 
 Bem-vindo à documentação do meu aplicativo Flutter. Este aplicativo permite que você faça consulta de varios tipos de pokemon. Aqui voce consegue fazer pesquisa por nomes e ids, e consegue ver algumas informaçãoes e detalhes do pokemon. 
 
